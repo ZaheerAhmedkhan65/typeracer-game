@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <title>Typewriter Car Race Game</title>
+</head>
+
+<body>
+    <div class="container">
+        <h1 class="title">Typewriter Car Race Game</h1>
+        <div id="car-selection">
+            <img src="car1.png" alt="Car 1" class="car-option" data-car="car1.png" width="100px" height="70px">
+            <img src="car2.png" alt="Car 2" class="car-option" data-car="car2.png" width="100px" height="70px">
+            <img src="car3.png" alt="Car 3" class="car-option" data-car="car3.png" width="100px" height="70px">
+        </div>
+        <div class="instructions">
+            <div>The race is on!</div>
+            <div class="circle-container">
+                <div class="circle green"></div>
+                <div class="circle yellow"></div>
+                <div class="circle red"></div>
+            </div>
+        </div>
+
+        <div id="race-track">
+            <img id="car1" src="car1.png" class="car" alt="Selected Car" width="100px" height="70px">
+            <span id="wps"></span>
+        </div>
+        <div class="target-text-container">
+            <div class="timer-container">
+                <div>Type the text below having  <span class="remaining-characters"></span> characters: </div>
+                <div id="timer">60 s</div>
+            </div>
+            
+            <div class="prevent-select" id="target-text"></div>
+            <input type="text" id="typing-input" placeholder="Type here...">
+        </div>
+        <div class="result-container">
+            <div id="result"></div>
+            <div id="stats"></div>
+            <button id="restart-button" style="display: none;">Restart</button>
+        </div>    
+
+    </div>
+
+    <script src="script.js"></script>
+</body>
+
+</html>

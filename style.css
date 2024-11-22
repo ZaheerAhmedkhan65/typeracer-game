@@ -1,0 +1,179 @@
+body {
+    font-family: Arial, sans-serif;
+    text-align: center;
+    margin: 0;
+    padding: 0;
+}
+.container{
+    margin-left: 15%;
+    margin-right: 15%;
+}
+.title{
+    text-align: start;
+}
+
+#race-track {
+    position: relative;
+    width: 100%;
+    height: 100px;
+    margin: 20px 0;
+    border-bottom: 5px dashed yellow ;
+}
+
+#car-selection{
+    display: none;
+}
+
+.car {
+    position: absolute;
+    top: 20px;
+    font-size: 2em;
+}
+
+#car1 {
+    top: 20px;
+}
+
+#result {
+    margin-top: 20px;
+    font-size: 1.5em;
+    font-weight: bold;
+    padding: 10px;
+}
+
+#typing-input {
+    padding: 10px;
+    font-size: 1em;
+    width: 80%;
+    margin: 20px 0;
+}
+
+#target-text {
+    font-size: 1.2em;
+    margin-bottom: 20px;
+    line-height: 1.5;
+}
+
+.matched {
+    color: green;
+}
+
+.unmatched {
+    color: black;
+}
+
+.error {
+    color: red;
+    background-color: rgb(222, 93, 93);
+}
+
+.instructions{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.target-text-container{
+    border: 2px solid rgb(46, 46, 46);
+    border-radius: 5px;
+    background-color: rgb(200, 231, 220);
+}
+
+.timer-container{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin: 10px;
+}
+#timer {
+    font-size: 1.2em;
+    margin-bottom: 10px;
+}
+
+.result-container{
+    position: absolute;
+    top: 10%;
+    right: 40%;
+    background-color:  rgb(200, 231, 220);
+    text-align: start;
+    display: none;
+}
+.circle-container {
+    display: flex;
+    justify-content: end;
+    gap: 10px;
+    margin: 10px;
+}
+
+
+.circle {
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background-color: lightgray;
+    border: 2px solid black;
+}
+
+.circle.green {
+    background-color: darkgreen;
+    opacity: 0.5;
+}
+
+.circle.yellow {
+    background-color: goldenrod;
+    opacity: 0.5;
+}
+
+.circle.red {
+    background-color: darkred;
+    opacity: 0.5;
+}
+.vibrate{
+    background-color: darkred;
+    animation: vibrate 0.8s steps(1) infinite;
+}
+
+@keyframes vibrate {
+    0%,100%{opacity: 1;}
+    50%{opacity: 0.2;}
+}
+
+.active {
+    filter: brightness(1.5);
+    transform: scale(1.2);
+    opacity: 1 !important;
+    transition: all 0.5 ease;
+}
+
+#stats {
+    margin-top: 10px;
+    font-size: 1.2em;
+    align-items: start;
+    width: 95%;
+    padding: 10px;
+}
+
+#restart-button {
+    padding: 10px 20px;
+    font-size: 1em;
+    margin-top: 20px;
+    cursor: pointer;
+}
+
+.cursor {
+    border-left: 2px solid black;
+    display: inline-block;
+    margin-left: -2px;
+    animation: blink 0.8s steps(1) infinite;
+}
+
+.prevent-select {
+    -webkit-user-select: none; /* Safari */
+    -ms-user-select: none; /* IE 10 and IE 11 */
+    user-select: none; /* Standard syntax */
+  }
+
+@keyframes blink {
+    50% {
+        opacity: 0;
+    }
+}
