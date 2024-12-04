@@ -10,40 +10,82 @@
 
 <body>
     <div class="container">
-        <h1 class="title">Typewriter Car Race Game</h1>
         <div id="car-selection">
-            <img src="car1.png" alt="Car 1" class="car-option" data-car="car1.png" width="100px" height="70px">
-            <img src="car2.png" alt="Car 2" class="car-option" data-car="car2.png" width="100px" height="70px">
-            <img src="car3.png" alt="Car 3" class="car-option" data-car="car3.png" width="100px" height="70px">
-        </div>
-        <div class="instructions">
-            <div>The race is on!</div>
-            <div class="circle-container">
-                <div class="circle green"></div>
-                <div class="circle yellow"></div>
-                <div class="circle red"></div>
+            <h2 class="text-center">Select Your Car for Race</h2>
+            <div class="car-options">
+                <img class="car-option" src="car1.png" data-car="car1.png" alt="Car 1" width="220px" height="120px">
+                <img class="car-option" src="car2.png" data-car="car2.png" alt="Car 2" width="220px" height="120px">
+            </div>
+            <div class="d-flex align-items-center justify-content-center">
+                <button id="start-button">Start Game</button>
             </div>
         </div>
-
-        <div id="race-track">
-            <img id="car1" src="car1.png" class="car" alt="Selected Car" width="100px" height="70px">
-            <span id="wps"></span>
-        </div>
-        <div class="target-text-container">
-            <div class="timer-container">
-                <div>Type the text below having  <span class="remaining-characters"></span> characters: </div>
-                <div id="timer"></div>
+        <div id="game-container" style="display: none;">
+            <h1 class="title">Typewriter Car Race Game</h1>
+            <div class="instructions">
+                <div>The race is on!</div>
+                <div class="circle-container">
+                    <div class="circle green"></div>
+                    <div class="circle yellow"></div>
+                    <div class="circle red"></div>
+                </div>
             </div>
-            
-            <div class="prevent-select" id="target-text"></div>
-            <input type="text" id="typing-input" placeholder="Type here...">
-        </div>
-        <div class="result-container">
-            <div id="result"></div>
-            <div id="stats"></div>
-            <button id="restart-button" style="display: none;">Restart</button>
-        </div>    
 
+            <div id="race-track">
+                <img id="car1" src="car1.png" class="car" alt="Selected Car" width="150px" height="100px">
+                <span id="wps"></span>
+            </div>
+            <div id="display-settings">
+                <div class="d-flex align-items-center justify-content-between">
+                    <h3 class="m-0">Settings</h3>
+                    <span class="closeSettings">x</span>
+                </div>
+                
+                <div>
+                     <p class="text-start">Accessibility</p>
+                     <hr>
+                </div>
+                <div class="d-flex align-items-center justify-content-between">
+                     <p class="m-0 m-1">Font Size</p>
+                     <select name="font-size" id="font-size">
+                        <option value="20px">Default (20px)</option>
+                        <option value="14px">Smaller (14px)</option>
+                        <option value="16px">Small (16px)</option>
+                        <option value="24px">Big (24px)</option>
+                        <option value="32px">Bigger (32px)</option>
+                     </select>
+                </div>
+                <div class="d-flex align-items-center justify-content-between">
+                    <p class="m-0 m-1">Font Family</p>
+                    <select name="font-family" id="font-family">
+                        <option value="Monospace">Default (Monospace)</option>
+                        <option value="Times New Roman">Times New Roman</option>
+                        <option value="Arial">Arial</option>
+                        <option value="Verdana">Verdana</option>
+                    </select>
+               </div>
+               <hr>
+            </div>
+            <div class="target-text-container">
+                <div class="timer-container">
+                    <div>Type the text below having <span class="remaining-characters"></span> characters: </div>
+                    <div id="timer">60 s</div>
+                </div>
+
+                <div class="prevent-select" id="target-text"></div>
+                <div>
+                    <div id="change-display">change display</div>
+                    <input type="text" id="typing-input" placeholder="Type here...">
+                </div>
+            </div>
+            <div class="result-container">
+                <div id="result" class="text-center"></div>
+                <div id="stats"></div>
+                <div class="d-flex align-items-center justify-content-center">
+                    <button id="restart-button" style="display: none;">Restart</button>
+                </div>
+            </div>
+        </div>
     </div>
 
     <script src="script.js"></script>
