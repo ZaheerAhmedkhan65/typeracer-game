@@ -121,6 +121,8 @@ document.addEventListener('DOMContentLoaded', () => {
            alert("Please select a car to start the game.");
         }
     });
+
+
       
     // Car Selection Logic
     carOptions.forEach(option => {

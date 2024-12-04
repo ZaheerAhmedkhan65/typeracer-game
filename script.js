@@ -1,14 +1,10 @@
-const paragraphs = [
-  "In a hole in the ground there lived a hobbit. Not a nasty, dirty, wet hole, filled with the ends of worms and an oozy smell.",
-  "It was the best of times, it was the worst of times, it was the age of wisdom, it was the age of foolishness.",
-  "Call me Ishmael. Some years ago - never mind how long precisely - having little or no money in my purse, and nothing particular to interest me on shore.",
-  "All happy families are alike; each unhappy family is unhappy in its own way.",
-]
-function  getRandomParagraph(){
-    return Math.floor(Math.random() * paragraphs.length)
-}
-
 document.addEventListener('DOMContentLoaded', () => {
+    const paragraphs = [
+        "In a hole in the ground there lived a hobbit. Not a nasty, dirty, wet hole, filled with the ends of worms and an oozy smell.",
+        "It was the best of times, it was the worst of times, it was the age of wisdom, it was the age of foolishness.",
+        "Call me Ishmael. Some years ago - never mind how long precisely - having little or no money in my purse, and nothing particular to interest me on shore.",
+        "All happy families are alike; each unhappy family is unhappy in its own way.",
+      ]
     const typingInput = document.getElementById('typing-input');
     const carOptions = document.querySelectorAll('.car-option');
     const raceCar = document.getElementById('car1');
@@ -16,39 +12,41 @@ document.addEventListener('DOMContentLoaded', () => {
     const targetTextElement = document.getElementById('target-text');
     const timerElement = document.getElementById('timer');
     const statsElement = document.getElementById('stats');
+    const startButton = document.getElementById('start-button');
+    const carSelection = document.getElementById('car-selection');
     const restartButton = document.getElementById('restart-button');
     const greenCircle = document.querySelector('.circle.green');
     const yellowCircle = document.querySelector('.circle.yellow');
     const redCircle = document.querySelector('.circle.red');
-    const totalDistance = 1255;
+    const gameContainer = document.getElementById('game-container');
+    const container = document.querySelector('.container');
     const targetText = paragraphs[getRandomParagraph()];
-    console.log(targetText);
     let remainingCharacters = document.querySelector('.remaining-characters');
     let wps = document.querySelector('#wps');
     let resultContainer = document.querySelector('.result-container');
-    console.log(totalDistance)
     let carPosition = 0;
-    let timeLeft = 60;
+    let timeLeft = 0;
     let timeTaken = 0;
     let writtenChars = 0;
     let timerInterval;
-    let gameStartTime;
+    // let gameStartTime;
     let targetTextLength = targetText.length;
-    
-    // Set up car customization
-    let selectedCar = 'car1.png';
+    let totalDistance;
 
-    // Car selection logic
-    carOptions.forEach(option => {
-        option.addEventListener('click', () => {
-            carOptions.forEach(car => car.classList.remove('selected')); // Remove previous selection
-            option.classList.add('selected'); // Highlight selected car
-            selectedCar = option.dataset.car; // Update selected car
-            raceCar.src = selectedCar; // Update race car image
-            result.textContent = "Car selected! Ready to start.";
-        });
-    });
+    function  getRandomParagraph(){
+        return Math.floor(Math.random() * paragraphs.length)
+    }
     
+    function updateTotalDistance() {
+        const containerWidth = container.offsetWidth;
+        const carWidth = raceCar.offsetWidth;
+        totalDistance = containerWidth - carWidth; // Ensure the car stays within bounds
+    }
+
+    window.addEventListener('resize', updateTotalDistance); // Recalculate on window resize
+    updateTotalDistance(); // Initial calculation
+
+
     document.addEventListener('keypress', (e) => {
         if (e.key === 'Enter' && typingInput.disabled) {
             if (selectedCar) {
@@ -71,7 +69,7 @@ document.addEventListener('DOMContentLoaded', () => {
         restartButton.style.display = "none";
         resultContainer.style.display = "none";
         raceCar.style.left = "0px";
-        timerElement.textContent = `${timeLeft} s`;
+        timerElement.textContent = `${formatTime(timeLeft)} s`;
         greenCircle.classList.add('active');
         yellowCircle.classList.remove('active');
         redCircle.classList.remove('active');
@@ -140,8 +138,8 @@ document.addEventListener('DOMContentLoaded', () => {
         timeTaken = targetText.length - timeLeft;
         const speed = (writtenChars / timeTaken).toFixed(2);
         statsElement.innerHTML = `
-            <p>Remaining Time: ${timeLeft} s</p>
-            <p>Time Taken: ${timeTaken}s</p>
+            <p>Remaining Time: ${formatTime(timeLeft)} s</p>
+            <p>Time Taken: ${formatTime(timeTaken)} s</p>
             <p>Writing Speed: ${speed} chars/s</p>
             <p>Written Characters: ${writtenChars}</p>
         `;
@@ -191,7 +189,6 @@ document.addEventListener('DOMContentLoaded', () => {
             remainingCharacters.textContent = targetTextLength - typedText.length;
             carPosition = (typedText.length / targetText.length) * totalDistance;
             raceCar.style.left = `${carPosition}px`;
-            console.log("Car Position : " + carPosition)
         } else if (firstErrorIndex !== -1) {
             targetTextSpans[firstErrorIndex].classList.add("cursor");
         }
@@ -201,13 +198,100 @@ document.addEventListener('DOMContentLoaded', () => {
             typingInput.disabled = true;
             resultContainer.style.display = "block";
             displayStats();
-            result.textContent = "Congratulations! You win!";
+            result.textContent = "Congratulations! You won!";
             restartButton.style.display = "block";
         }
     });
 
-    restartButton.addEventListener('click', initializeGame);
+        carOptions.forEach(option => {
+            option.addEventListener('click', () => {
+                carOptions.forEach(car => car.classList.remove('selected'));
+                option.classList.add('selected');
+                startButton.style.display = "block";
+                selectedCar = option.dataset.car;
+                raceCar.src = selectedCar;
+            });
+        });
 
-    initializeGame();
+        // Start Button Logic
+        startButton.addEventListener('click', () => {
+            if (selectedCar) {
+                carSelection.style.display = "none";
+                gameContainer.style.display = "block";
+                initializeGame();
+            } else {
+               alert("Please select a car to start the game.");
+            }
+        });
+        restartButton.addEventListener("click", initializeGame); 
 });
 
+
+
+
+const changeDisplay = document.getElementById("change-display");
+const displaySettings = document.getElementById("display-settings");
+changeDisplay.addEventListener("click", () => {
+    if(displaySettings.style.display === "block"){
+        displaySettings.style.display = "none"
+    }else{
+        displaySettings.style.display = "block"
+    }
+});
+
+const closeSettings = document.querySelector(".closeSettings");
+closeSettings.addEventListener("click", () => {
+    displaySettings.style.display = "none";
+});
+
+const changefontSize = document.getElementById("font-size");
+const changefontFamily = document.getElementById("font-family");
+const targetTextContainer = document.querySelector(".target-text-container");
+changefontSize.addEventListener("change", (e) => {
+    cfontSize(e.target.value);
+})
+changefontFamily.addEventListener("change", (e) => {
+    cfontFamily(e.target.value);
+})
+function cfontFamily(fF) {
+    switch (fF) {
+        case "Monospace":
+            targetTextContainer.style.fontFamily = "monospace";
+            break;
+        case "Times New Roman":
+            targetTextContainer.style.fontFamily = "Times New Roman";
+            break;
+        case "Arial":
+            targetTextContainer.style.fontFamily = "Arial";
+            break;
+        case "Verdana":
+            targetTextContainer.style.fontFamily = "Verdana";
+            break;
+        default:
+            targetTextContainer.style.fontFamily = "monospace";
+            break;
+    }
+}
+
+function cfontSize(fS) {
+    switch (fS) {
+        case "14px":
+            targetTextContainer.style.fontSize = "14px";
+            break;
+        case "16px":
+            targetTextContainer.style.fontSize = "16px";
+            break;
+        case "20px":
+            targetTextContainer.style.fontSize = "20px";
+            break;
+        case "24px":
+            targetTextContainer.style.fontSize = "24px";
+            break;
+        case "32px":
+            targetTextContainer.style.fontSize = "32px";
+            break;
+        default:
+            targetTextContainer.style.fontSize = "20px";
+            break;
+    }
+}
