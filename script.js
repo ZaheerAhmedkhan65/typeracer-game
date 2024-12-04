@@ -20,8 +20,9 @@ document.addEventListener('DOMContentLoaded', () => {
     const greenCircle = document.querySelector('.circle.green');
     const yellowCircle = document.querySelector('.circle.yellow');
     const redCircle = document.querySelector('.circle.red');
-    const totalDistance = 970;
+    const totalDistance = 1255;
     const targetText = paragraphs[getRandomParagraph()];
+    console.log(targetText);
     let remainingCharacters = document.querySelector('.remaining-characters');
     let wps = document.querySelector('#wps');
     let resultContainer = document.querySelector('.result-container');
