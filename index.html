@@ -23,18 +23,20 @@
         <div id="game-container" style="display: none;">
             <h1 class="title">Typewriter Car Race Game</h1>
             <div class="instructions">
-                <div>The race is on!</div>
+                <div>Type the text as fast as you can to win the race.</div>
                 <div class="circle-container">
                     <div class="circle green"></div>
                     <div class="circle yellow"></div>
                     <div class="circle red"></div>
                 </div>
             </div>
-
-            <div id="race-track">
-                <img id="car1" src="car1.png" class="car" alt="Selected Car" width="150px" height="100px">
-                <span id="wps"></span>
+            <div class="race-track-container d-flex align-items-center justify-content-between">
+                <div id="race-track">
+                    <img id="car1" src="car1.png" class="car" alt="Selected Car" width="150px" height="100px">
+                </div>
+                <span id="wps" class="fw-bold">0 cps</span>
             </div>
+            
             <div id="display-settings">
                 <div class="d-flex align-items-center justify-content-between">
                     <h3 class="m-0">Settings</h3>
@@ -68,16 +70,21 @@
             </div>
             <div class="target-text-container">
                 <div class="timer-container">
-                    <div>Type the text below having <span class="remaining-characters"></span> characters: </div>
-                    <div id="timer">60 s</div>
+                    <div>Remaining characters <span class="remaining-characters fw-bold"></span></div>
+                    <div id="timer" class="fw-bold"></div>
                 </div>
-
-                <div class="prevent-select" id="target-text"></div>
+                <div class="target-text">
+                    <img src="typethis.svg" alt="type this" id="typethis">
+                    <div class="prevent-select" id="target-text"></div>
+                </div>
                 <div>
                     <div class="text-end mr-9"> 
                         <button id="change-display">change display</button>
                     </div>
-                    <input type="text" id="typing-input" placeholder="Type here...">
+                    <div class="typing-input-container">
+                        <img src="here.svg" alt="here" id="here">
+                        <input type="text" id="typing-input" placeholder="Type here...">
+                    </div>
                 </div>
             </div>
             <div class="result-container">

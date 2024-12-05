@@ -12,9 +12,14 @@ body {
     text-align: start;
 }
 
+#wps{
+   font-size: 20px;
+   margin-top: 40px;
+}
+
 #race-track {
     position: relative;
-    width: 100%;
+    width: 94%;
     height: 110px;
     margin: 20px 0;
     border-bottom: 5px dashed yellow ;
@@ -103,7 +108,9 @@ body {
 .m-1{
     margin: 10px 0px !important;
 }
-
+.fw-bold{
+    font-weight: bold;
+}
 #display-settings{
     position: absolute;
     top: 20%;
@@ -129,7 +136,10 @@ body {
 #change-display{
     cursor: pointer;
     font-weight: bold;
+    font-size: 18px;
     color: rgb(193, 193, 12);
+    border: none;
+    background-color: transparent;
 }
 .mr-9{
     margin-right: 9%;
@@ -180,7 +190,7 @@ body {
     border: 1px solid black;
     padding: 5px 10px;
     border-radius: 5px;
-    background-color: rgba(46, 46, 46, 0.865);
+    background-color: rgb(46 46 46 / 60%);
 }
 
 
@@ -258,5 +268,38 @@ body {
 @keyframes blink {
     50% {
         opacity: 0;
+    }
+}
+
+.target-text{
+    position: relative;
+}
+
+#typethis{
+    position: absolute;
+    left: -65px;
+    top: -5px;
+    animation: animate-top 1s infinite alternate linear;
+}
+.typing-input-container{
+    position: relative;
+}
+
+#here{
+    position: absolute;
+    left: 60px;
+    top: 10px;
+    animation: animate-top 1s infinite alternate linear;
+}
+
+@keyframes animate-top {
+    0%{
+        height: 35px;
+        width: 60px;
+    }
+    100%{
+        height: 50px;
+        width: 65px;
+        transform: scale(1.15);
     }
 }

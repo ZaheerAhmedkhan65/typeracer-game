@@ -20,15 +20,18 @@ document.addEventListener('DOMContentLoaded', () => {
     const redCircle = document.querySelector('.circle.red');
     const gameContainer = document.getElementById('game-container');
     const container = document.querySelector('.container');
+    const raceTrack = document.getElementById('race-track');
     const targetText = paragraphs[getRandomParagraph()];
     let remainingCharacters = document.querySelector('.remaining-characters');
     let wps = document.querySelector('#wps');
     let resultContainer = document.querySelector('.result-container');
+
     let carPosition = 0;
     let timeLeft = 0;
     let timeTaken = 0;
     let writtenChars = 0;
     let timerInterval;
+
     // let gameStartTime;
     let targetTextLength = targetText.length;
     let totalDistance;
@@ -41,7 +44,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
     
     function updateTotalDistance() {
-        const containerWidth = container.offsetWidth;
+        const containerWidth = raceTrack.offsetWidth;
         const carWidth = raceCar.offsetWidth;
         totalDistance = containerWidth - carWidth; // Ensure the car stays within bounds
     }
@@ -72,7 +75,7 @@ document.addEventListener('DOMContentLoaded', () => {
         restartButton.style.display = "none";
         resultContainer.style.display = "none";
         raceCar.style.left = "0px";
-        timerElement.textContent = `${formatTime(timeLeft)} s`;
+        timerElement.textContent = `${formatTime(timeLeft)}s`;
         greenCircle.classList.add('active');
         yellowCircle.classList.remove('active');
         redCircle.classList.remove('active');
@@ -82,6 +85,7 @@ document.addEventListener('DOMContentLoaded', () => {
         timerInterval = setInterval(updateTimer, 1000);
         remainingCharacters.textContent = targetTextLength;
         typingInput.focus();
+        wps.textContent = `0 cps`;
     };
 
     const renderTargetText = (typedLength) => {
@@ -99,15 +103,22 @@ document.addEventListener('DOMContentLoaded', () => {
     renderTargetText(0);
 
     function formatTime(seconds) {
-        const minutes = Math.floor(seconds / 60);
-        const secs = seconds % 60;
-        return `${minutes.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
+        if (seconds < 60) {
+            // If remaining time is less than 60 seconds
+            return `${seconds}`;
+        } else {
+            // If remaining time is 60 seconds or more
+            const minutes = Math.floor(seconds / 60);
+            const secs = seconds % 60;
+            return `${minutes.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
+        }
     }
+    
 
     const updateTimer = () => {
         if (timeLeft > 0) {
             timeLeft--;
-            timerElement.textContent = `${formatTime(timeLeft)} s`;
+            timerElement.textContent = `${formatTime(timeLeft)}s`;
             updateCircles();
         } else {
             clearInterval(timerInterval);
@@ -120,7 +131,7 @@ document.addEventListener('DOMContentLoaded', () => {
             removeCursor();
         }
     };
-
+  console.log(targetText)
     const updateCircles = () => {
         if (timeLeft > 30) {
             greenCircle.classList.add('active');
@@ -142,10 +153,10 @@ document.addEventListener('DOMContentLoaded', () => {
         timeTaken = targetText.length - timeLeft;
         const speed = (writtenChars / timeTaken).toFixed(2);
         statsElement.innerHTML = `
-            <p>Remaining Time: ${formatTime(timeLeft)} s</p>
-            <p>Time Taken: ${formatTime(timeTaken)} s</p>
-            <p>Writing Speed: ${speed} chars/s</p>
-            <p>Written Characters: ${writtenChars}</p>
+            <p>Remaining Time: <span class="fw-bold"> ${formatTime(timeLeft)}s </span></p>
+            <p>Time Taken: <span class="fw-bold"> ${formatTime(timeTaken)}s </span></p>
+            <p>Writing Speed: <span class="fw-bold"> ${speed} cps</span></p>
+            <p>Written Characters: <span class="fw-bold"> ${writtenChars}</span></p>
         `;
     };
 
@@ -158,45 +169,46 @@ document.addEventListener('DOMContentLoaded', () => {
 
     typingInput.addEventListener('input', () => {
         const typedText = typingInput.value;
-        writtenChars = typedText.length;
-
-        let isCorrect = true;
-        let firstErrorIndex = -1;
-
+        let correctChars = 0;
+    
         const targetTextSpans = targetTextElement.querySelectorAll("span");
         for (let i = 0; i < targetText.length; i++) {
             const char = targetText[i];
             if (i < typedText.length) {
                 if (typedText[i] === char) {
                     targetTextSpans[i].className = "matched";
+                    correctChars++;
                 } else {
                     targetTextSpans[i].className = "error";
-                    isCorrect = false;
-                    if (firstErrorIndex === -1) {
-                        firstErrorIndex = i;
-                    }
                 }
             } else {
                 targetTextSpans[i].className = "unmatched";
             }
         }
-
+    
+        // Update the real-time speed if the correct characters count changes
+        if (correctChars > writtenChars) {
+            writtenChars = correctChars;
+            const elapsedSeconds = (Date.now() - gameStartTime) / 1000;
+            const speed = (writtenChars / elapsedSeconds).toFixed(2);
+            wps.textContent = `${speed} cps`;
+        }
+    
         const cursor = targetTextElement.querySelector(".cursor");
         if (cursor) {
             cursor.classList.remove("cursor");
         }
-
-        if (isCorrect) {
-            if (typedText.length < targetText.length) {
-                targetTextSpans[typedText.length].classList.add("cursor");
-            }
-            remainingCharacters.textContent = targetTextLength - typedText.length;
-            carPosition = (typedText.length / targetText.length) * totalDistance;
-            raceCar.style.left = `${carPosition}px`;
-        } else if (firstErrorIndex !== -1) {
-            targetTextSpans[firstErrorIndex].classList.add("cursor");
+    
+        if (typedText.length < targetText.length) {
+            targetTextSpans[typedText.length].classList.add("cursor");
         }
-
+        remainingCharacters.textContent = targetTextLength - writtenChars;
+    
+        // Update car position
+        carPosition = (writtenChars / targetText.length) * totalDistance;
+        raceCar.style.left = `${carPosition}px`;
+    
+        // Check for completion
         if (typedText === targetText) {
             clearInterval(timerInterval);
             typingInput.disabled = true;
@@ -207,6 +219,8 @@ document.addEventListener('DOMContentLoaded', () => {
             redCircle.classList.remove('vibrate');
         }
     });
+    
+    
 
         carOptions.forEach(option => {
             option.addEventListener('click', () => {
