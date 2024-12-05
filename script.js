@@ -32,6 +32,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // let gameStartTime;
     let targetTextLength = targetText.length;
     let totalDistance;
+    updateTotalDistance();
 
     function  getRandomParagraph(){
         return Math.floor(Math.random() * paragraphs.length)
@@ -44,7 +45,6 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     window.addEventListener('resize', updateTotalDistance); // Recalculate on window resize
-    updateTotalDistance(); // Initial calculation
 
 
     document.addEventListener('keypress', (e) => {
@@ -58,6 +58,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     const initializeGame = () => {
+        updateTotalDistance();
         carPosition = 0;
         timeLeft = targetText.length;
         timeTaken = 0;
@@ -295,3 +296,4 @@ function cfontSize(fS) {
             break;
     }
 }
+
