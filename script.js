@@ -33,6 +33,8 @@ document.addEventListener('DOMContentLoaded', () => {
     let targetTextLength = targetText.length;
     let totalDistance;
     updateTotalDistance();
+    cfontFamily("Monospace");
+    cfontSize("20px");
 
     function  getRandomParagraph(){
         return Math.floor(Math.random() * paragraphs.length)
@@ -114,6 +116,7 @@ document.addEventListener('DOMContentLoaded', () => {
             displayStats();
             result.textContent = "Time's up! You lost.";
             restartButton.style.display = "block";
+            redCircle.classList.remove('vibrate');
             removeCursor();
         }
     };
@@ -201,6 +204,7 @@ document.addEventListener('DOMContentLoaded', () => {
             displayStats();
             result.textContent = "Congratulations! You won!";
             restartButton.style.display = "block";
+            redCircle.classList.remove('vibrate');
         }
     });
 

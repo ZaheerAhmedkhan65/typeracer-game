@@ -128,11 +128,11 @@ body {
 
 #change-display{
     cursor: pointer;
-    width: 80%;
-    margin-left: 11%;
-    text-align: end;
     font-weight: bold;
     color: rgb(193, 193, 12);
+}
+.mr-9{
+    margin-right: 9%;
 }
 .instructions{
     display: flex;
@@ -177,6 +177,10 @@ body {
     justify-content: end;
     gap: 10px;
     margin: 10px;
+    border: 1px solid black;
+    padding: 5px 10px;
+    border-radius: 5px;
+    background-color: rgba(46, 46, 46, 0.865);
 }
 
 
