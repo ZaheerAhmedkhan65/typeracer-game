@@ -243,6 +243,9 @@ body {
 #start-button{
     display: none;
 }
+#start-button i,#restart-button i{
+    font-size: 40px;
+}
 #restart-button,#start-button {
     padding: 10px 20px;
     font-size: 1em;
@@ -250,6 +253,7 @@ body {
     margin-top: 20px;
     margin-bottom: 10px;
     cursor: pointer;
+    animation: play 1s infinite alternate linear;
 }
 
 .cursor {
@@ -258,6 +262,7 @@ body {
     margin-left: -2px;
     animation: blink 0.8s steps(1) infinite;
 }
+
 
 .prevent-select {
     -webkit-user-select: none; /* Safari */
@@ -290,6 +295,15 @@ body {
     left: 60px;
     top: 10px;
     animation: animate-top 1s infinite alternate linear;
+}
+
+@keyframes play {
+    0%{
+        transform: scale(1);
+    }
+    100%{
+        transform: scale(1.2);
+    }
 }
 
 @keyframes animate-top {

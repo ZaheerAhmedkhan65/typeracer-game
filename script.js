@@ -104,10 +104,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function formatTime(seconds) {
         if (seconds < 60) {
-            // If remaining time is less than 60 seconds
+            // If remaining time is less than 60 seconds then display time as 45s
             return `${seconds}`;
         } else {
-            // If remaining time is 60 seconds or more
+            // If remaining time is 60 seconds or more then display time as 1:01s
             const minutes = Math.floor(seconds / 60);
             const secs = seconds % 60;
             return `${minutes.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
