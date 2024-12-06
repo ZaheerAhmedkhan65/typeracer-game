@@ -150,15 +150,18 @@ document.addEventListener('DOMContentLoaded', () => {
     };
 
     const displayStats = () => {
-        timeTaken = targetText.length - timeLeft;
-        const speed = (writtenChars / timeTaken).toFixed(2);
+        const elapsedSeconds = Math.floor((Date.now() - gameStartTime) / 1000);
+        const speed = (writtenChars / elapsedSeconds).toFixed(2); // Unified speed calculation
         statsElement.innerHTML = `
-            <p>Remaining Time: <span class="fw-bold"> ${formatTime(timeLeft)}s </span></p>
-            <p>Time Taken: <span class="fw-bold"> ${formatTime(timeTaken)}s </span></p>
+            <p>Remaining Time: <span class="fw-bold"> ${formatTime(timeLeft)} s </span></p>
+            <p>Time Taken: <span class="fw-bold"> ${formatTime(elapsedSeconds)} s </span></p>
             <p>Writing Speed: <span class="fw-bold"> ${speed} cps</span></p>
             <p>Written Characters: <span class="fw-bold"> ${writtenChars}</span></p>
         `;
+        wps.textContent = `${speed} cps`; // Update writing speed display
     };
+    
+    
 
     const removeCursor = () => {
         const cursor = targetTextElement.querySelector('.cursor');
@@ -186,27 +189,28 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         }
     
-        // Update the real-time speed if the correct characters count changes
-        if (correctChars > writtenChars) {
-            writtenChars = correctChars;
-            const elapsedSeconds = (Date.now() - gameStartTime) / 1000;
-            const speed = (writtenChars / elapsedSeconds).toFixed(2);
-            wps.textContent = `${speed} cps`;
-        }
+        // Update the number of correct characters
+        writtenChars = correctChars;
+        remainingCharacters.textContent = targetText.length - writtenChars;
     
+        // Update writing speed
+        const elapsedSeconds = (Date.now() - gameStartTime) / 1000;
+        const speed = (writtenChars / elapsedSeconds).toFixed(2);
+        wps.textContent = `${speed} cps`;
+    
+        // Update car position
+        carPosition = (writtenChars / targetText.length) * totalDistance;
+        raceCar.style.left = `${carPosition}px`;
+    
+        // Update cursor position
         const cursor = targetTextElement.querySelector(".cursor");
         if (cursor) {
             cursor.classList.remove("cursor");
         }
     
         if (typedText.length < targetText.length) {
-            targetTextSpans[typedText.length].classList.add("cursor");
+            targetTextSpans[typedText.length]?.classList.add("cursor");
         }
-        remainingCharacters.textContent = targetTextLength - writtenChars;
-    
-        // Update car position
-        carPosition = (writtenChars / targetText.length) * totalDistance;
-        raceCar.style.left = `${carPosition}px`;
     
         // Check for completion
         if (typedText === targetText) {
@@ -219,6 +223,7 @@ document.addEventListener('DOMContentLoaded', () => {
             redCircle.classList.remove('vibrate');
         }
     });
+    
     
     
 
